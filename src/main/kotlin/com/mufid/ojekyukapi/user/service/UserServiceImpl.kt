@@ -1,9 +1,9 @@
 package com.mufid.ojekyukapi.user.service
 
 import com.mufid.ojekyukapi.authentication.JwtConfig
-import com.mufid.ojekyukapi.user.entity.LoginResponse
+import com.mufid.ojekyukapi.user.entity.response.LoginResponse
 import com.mufid.ojekyukapi.user.entity.User
-import com.mufid.ojekyukapi.user.entity.UserLogin
+import com.mufid.ojekyukapi.user.entity.request.UserLoginRequest
 import com.mufid.ojekyukapi.user.repository.UserRepository
 import com.mufid.ojekyukapi.utils.handler.OjekyukException
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,13 +14,13 @@ class UserServiceImpl(
     @Autowired
     private val userRepository: UserRepository
 ): UserService {
-    override fun getLogin(userLogin: UserLogin): Result<LoginResponse> {
-        val resultUser = userRepository.getUserByUsername(userLogin.username)
+    override fun login(userLoginRequest: UserLoginRequest): Result<LoginResponse> {
+        val resultUser = userRepository.getUserByUsername(userLoginRequest.username)
         return resultUser.map {
-            if (it.password == userLogin.password) {
+            if (it.password == userLoginRequest.password) {
                 LoginResponse(JwtConfig.generateToken(it))
             } else {
-                throw OjekyukException("Password not match!")
+                throw OjekyukException("Password invalid!")
             }
         }
     }
