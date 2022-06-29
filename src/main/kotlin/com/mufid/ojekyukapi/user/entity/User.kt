@@ -55,8 +55,8 @@ data class User(
 
         fun userDriver(
             username: String,
-            firstName: String,
             password: String,
+            firstName: String,
             lastName: String,
             phoneNumber: String,
             email: String
