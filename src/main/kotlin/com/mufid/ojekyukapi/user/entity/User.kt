@@ -34,6 +34,44 @@ data class User(
             )
         }
 
+        fun userCustomer(
+            username: String,
+            password: String,
+            firstName: String,
+            lastName: String,
+            phoneNumber: String,
+            email: String
+        ): User {
+            return User(
+                username = username,
+                password = password,
+                firstName = firstName,
+                lastName = lastName,
+                phoneNumber = phoneNumber,
+                email = email,
+                role = RoleEnum.CUSTOMER.id
+            )
+        }
+
+        fun userDriver(
+            username: String,
+            firstName: String,
+            password: String,
+            lastName: String,
+            phoneNumber: String,
+            email: String
+        ): User {
+            return User(
+                username = username,
+                password = password,
+                firstName = firstName,
+                lastName = lastName,
+                phoneNumber = phoneNumber,
+                email = email,
+                role = RoleEnum.DRIVER.id
+            )
+        }
+
         fun createNewCustomer(
             username: String,
             password: String,

@@ -3,7 +3,7 @@ package com.mufid.ojekyukapi.user.entity.request
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.mufid.ojekyukapi.user.entity.User
 
-data class UserRegisterRequest(
+data class UserRequest(
 
     @JsonProperty("username")
     var username: String,
@@ -33,6 +33,14 @@ data class UserRegisterRequest(
 
     fun mapToNewDriver(): User {
         return User.createNewDriver(username, password, firstName, lastName, phoneNumber, email)
+    }
+
+    fun mapToCustomer(): User {
+        return User.userCustomer(username, password, firstName, lastName, phoneNumber, email)
+    }
+
+    fun mapToDriver(): User {
+        return User.userDriver(username, password, firstName, lastName, phoneNumber, email)
     }
 
 }

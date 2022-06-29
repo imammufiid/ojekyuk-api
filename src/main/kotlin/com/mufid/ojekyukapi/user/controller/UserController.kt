@@ -4,7 +4,7 @@ import com.mufid.ojekyukapi.BaseResponse
 import com.mufid.ojekyukapi.user.entity.response.LoginResponse
 import com.mufid.ojekyukapi.user.entity.User
 import com.mufid.ojekyukapi.user.entity.request.UserLoginRequest
-import com.mufid.ojekyukapi.user.entity.request.UserRegisterRequest
+import com.mufid.ojekyukapi.user.entity.request.UserRequest
 import com.mufid.ojekyukapi.user.service.UserService
 import com.mufid.ojekyukapi.utils.asResponse
 import org.springframework.beans.factory.annotation.Autowired
@@ -37,8 +37,8 @@ class UserController {
 
     @PostMapping("/register")
     fun register(
-        @RequestBody userRegisterRequest: UserRegisterRequest
+        @RequestBody userRequest: UserRequest
     ): BaseResponse<Boolean> {
-        return userService.register(userRegisterRequest.mapToNewUser()).asResponse()
+        return userService.register(userRequest.mapToNewUser()).asResponse()
     }
 }

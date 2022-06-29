@@ -4,6 +4,7 @@ import com.mufid.ojekyukapi.authentication.JwtConfig
 import com.mufid.ojekyukapi.user.entity.response.LoginResponse
 import com.mufid.ojekyukapi.user.entity.User
 import com.mufid.ojekyukapi.user.entity.request.UserLoginRequest
+import com.mufid.ojekyukapi.user.entity.request.UserRequest
 import com.mufid.ojekyukapi.user.repository.UserRepository
 import com.mufid.ojekyukapi.utils.handler.OjekyukException
 import org.springframework.beans.factory.annotation.Autowired
@@ -41,5 +42,9 @@ class UserServiceImpl(
             it.password = "xxxxxx"
             it
         }
+    }
+
+    override fun updateUser(id: String, user: User): Result<Boolean> {
+        return userRepository.updateUser(id, user)
     }
 }

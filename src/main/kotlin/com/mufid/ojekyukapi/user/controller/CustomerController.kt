@@ -4,7 +4,7 @@ import com.mufid.ojekyukapi.BaseResponse
 import com.mufid.ojekyukapi.user.entity.response.LoginResponse
 import com.mufid.ojekyukapi.user.entity.User
 import com.mufid.ojekyukapi.user.entity.request.UserLoginRequest
-import com.mufid.ojekyukapi.user.entity.request.UserRegisterRequest
+import com.mufid.ojekyukapi.user.entity.request.UserRequest
 import com.mufid.ojekyukapi.user.service.UserService
 import com.mufid.ojekyukapi.utils.asResponse
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,9 +25,9 @@ class CustomerController {
 
     @PostMapping("/register")
     fun register(
-        @RequestBody userRegisterRequest: UserRegisterRequest
+        @RequestBody userRequest: UserRequest
     ): BaseResponse<Boolean> {
-        return userService.register(userRegisterRequest.mapToNewCustomer()).asResponse()
+        return userService.register(userRequest.mapToNewCustomer()).asResponse()
     }
 
     @GetMapping
@@ -35,5 +35,13 @@ class CustomerController {
         // get id user by token
         val userId = SecurityContextHolder.getContext().authentication.principal as String
         return userService.getUserById(userId).asResponse()
+    }
+
+    @PutMapping
+    fun updateCustomer(
+        @RequestBody user: UserRequest
+    ): BaseResponse<Boolean> {
+        val id = SecurityContextHolder.getContext().authentication.principal as String
+        return userService.updateUser(id, user.mapToCustomer()).asResponse()
     }
 }
