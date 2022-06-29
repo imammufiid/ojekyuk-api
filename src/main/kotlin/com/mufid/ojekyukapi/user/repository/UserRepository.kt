@@ -8,4 +8,6 @@ interface UserRepository {
     fun getUserById(id: String): Result<User>
 
     fun getUserByUsername(username: String): Result<User>
+
+    fun updateUser(id: String, user: User): Result<Boolean>
 }

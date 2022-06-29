@@ -9,25 +9,13 @@ import com.mufid.ojekyukapi.user.service.UserService
 import com.mufid.ojekyukapi.utils.asResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/user")
-class UserController {
+@RequestMapping("/api/customer")
+class CustomerController {
     @Autowired
     private lateinit var userService: UserService
-
-    @GetMapping
-    fun getUser(): BaseResponse<User> {
-        // get id user by token
-        val userId = SecurityContextHolder.getContext().authentication.principal as String
-        return userService.getUserById(userId).asResponse()
-    }
-
     @PostMapping("/login")
     fun login(
         @RequestBody userLoginRequest: UserLoginRequest
@@ -39,6 +27,21 @@ class UserController {
     fun register(
         @RequestBody userRequest: UserRequest
     ): BaseResponse<Boolean> {
-        return userService.register(userRequest.mapToNewUser()).asResponse()
+        return userService.register(userRequest.mapToNewCustomer()).asResponse()
+    }
+
+    @GetMapping
+    fun getCustomerInfo(): BaseResponse<User> {
+        // get id user by token
+        val userId = SecurityContextHolder.getContext().authentication.principal as String
+        return userService.getUserById(userId).asResponse()
+    }
+
+    @PutMapping
+    fun updateCustomer(
+        @RequestBody user: UserRequest
+    ): BaseResponse<Boolean> {
+        val id = SecurityContextHolder.getContext().authentication.principal as String
+        return userService.updateUser(id, user.mapToCustomer()).asResponse()
     }
 }
