@@ -42,21 +42,43 @@ class UserRepositoryImpl(
     override fun updateUser(id: String, user: User): Result<Boolean> {
         println("User => $user")
         val existingUser = getCollection().findOne(User::id eq id)
-        return if (existingUser != null) {
-            getCollection().updateOne(
-                User::id eq id, User(
-                    id = existingUser.id,
+
+        // check username is Exist
+        val existingUsername = getCollection().findOne(User::username eq user.username)
+        if (existingUsername != null) {
+            if (existingUsername.id == existingUser?.id) {
+                return doUpdate(
+                    User(
+                        id = existingUser.id,
+                        username = user.username,
+                        password = user.password.ifEmpty { existingUser.password },
+                        firstName = user.firstName,
+                        lastName = user.lastName,
+                        phoneNumber = user.phoneNumber,
+                        email = user.email,
+                        role = existingUser.role
+                    )
+                )
+            } else {
+                throw OjekyukException("Username is already exist!")
+            }
+        } else {
+            return doUpdate(
+                User(
+                    id = existingUser?.id ?: "",
                     username = user.username,
-                    password = user.password.ifEmpty { existingUser.password },
+                    password = user.password.ifEmpty { existingUser?.password ?: "" },
                     firstName = user.firstName,
                     lastName = user.lastName,
                     phoneNumber = user.phoneNumber,
                     email = user.email,
-                    role = existingUser.role
+                    role = existingUser?.role ?: 1
                 )
-            ).wasAcknowledged().toResult()
-        } else {
-            throw OjekyukException("User not found!")
+            )
         }
+    }
+
+    private fun doUpdate(user: User): Result<Boolean> {
+        return getCollection().updateOne(User::id eq user.id, user).wasAcknowledged().toResult()
     }
 }
