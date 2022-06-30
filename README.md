@@ -1,4 +1,4 @@
-# Marketplace Minimal API
+# API Specs
 
 ## Base url
 
