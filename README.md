@@ -9,21 +9,21 @@ https://ojekyuk-api.herokuapp.com/v1
 ## Table endpoints
 ### User Customer
 
-| Name              | Endpoint                     | Method   | JWT token | Body and response                             |
-|-------------------|------------------------------|----------|-----------|-----------------------------------------------|
-| Register customer | `api/user/customer/register` | `POST`   | no        | [example](#user-customer---register)          |
-| Login customer    | `api/user/customer/login`    | `POST`   | no        | [example](#user-customer---login)             |
-| Get customer info | `api/user/customer`          | `GET`    | yes       | [example](#user-customer---get-customer-info) |
-| Update customer   | `api/user/customer`          | `UPDATE` | yes       | [example](#user-customer---update-customer)   |
+| Name              | Endpoint                | Method   | JWT token | Body and response                             |
+|-------------------|-------------------------|----------|-----------|-----------------------------------------------|
+| Register customer | `api/customer/register` | `POST`   | no        | [example](#user-customer---register)          |
+| Login customer    | `api/customer/login`    | `POST`   | no        | [example](#user-customer---login)             |
+| Get customer info | `api/customer`          | `GET`    | yes       | [example](#user-customer---get-customer-info) |
+| Update customer   | `api/customer`          | `UPDATE` | yes       | [example](#user-customer---update-customer)   |
 
 ### User Driver
 
-| Name            | Endpoint                   | Method   | JWT token | Body and response                         |
-|-----------------|----------------------------|----------|-----------|-------------------------------------------|
-| Register driver | `api/user/driver/register` | `POST`   | no        | [example](#user-driver---register)        |
-| Login driver    | `api/user/driver/login`    | `POST`   | no        | [example](#user-driver---login)           |
-| Get driver info | `api/user/driver`          | `GET`    | yes       | [example](#user-driver---get-driver-info) |
-| Update driver   | `api/user/driver`          | `UPDATE` | yes       | [example](#user-driver---update-driver)   |
+| Name            | Endpoint              | Method   | JWT token | Body and response                         |
+|-----------------|-----------------------|----------|-----------|-------------------------------------------|
+| Register driver | `api/driver/register` | `POST`   | no        | [example](#user-driver---register)        |
+| Login driver    | `api/driver/login`    | `POST`   | no        | [example](#user-driver---login)           |
+| Get driver info | `api/driver`          | `GET`    | yes       | [example](#user-driver---get-driver-info) |
+| Update driver   | `api/driver`          | `UPDATE` | yes       | [example](#user-driver---update-driver)   |
 
 ---
 
