@@ -1,6 +1,7 @@
 package com.mufid.ojekyukapi.user.entity
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.mufid.ojekyukapi.location.entity.model.Coordinate
 import com.mufid.ojekyukapi.utils.RoleEnum
 import java.util.UUID
 
@@ -19,6 +20,8 @@ data class User(
     var email: String = "",
     @JsonProperty("password")
     var password: String = "",
+    @JsonProperty("location")
+    var location: Coordinate = Coordinate(),
     @JsonProperty("role")
     var role: Int = RoleEnum.CUSTOMER.id
 ) {
