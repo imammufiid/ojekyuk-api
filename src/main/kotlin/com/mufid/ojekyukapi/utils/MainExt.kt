@@ -1,6 +1,7 @@
 package com.mufid.ojekyukapi.utils
 
 import com.mufid.ojekyukapi.BaseResponse
+import com.mufid.ojekyukapi.location.entity.model.Coordinate
 import com.mufid.ojekyukapi.utils.handler.OjekyukException
 
 inline fun <reified T> T?.orThrow(
@@ -25,4 +26,11 @@ fun <T> Result<T>.asResponse(): BaseResponse<T> {
     } else {
         BaseResponse.success(this.getOrNull())
     }
+}
+
+fun String.coordinateStringToData(): Coordinate {
+    val coordinateStrings = split(",")
+    val lat = coordinateStrings[0].toDoubleOrNull() ?: 0.0
+    val lon = coordinateStrings[1].toDoubleOrNull() ?: 0.0
+    return Coordinate(lat, lon)
 }
