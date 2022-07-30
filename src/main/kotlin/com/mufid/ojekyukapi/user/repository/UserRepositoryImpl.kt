@@ -3,6 +3,7 @@ package com.mufid.ojekyukapi.user.repository
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters
 import com.mufid.ojekyukapi.database.DatabaseComponent
+import com.mufid.ojekyukapi.location.entity.model.Coordinate
 import com.mufid.ojekyukapi.user.entity.User
 import com.mufid.ojekyukapi.utils.handler.OjekyukException
 import com.mufid.ojekyukapi.utils.toResult
@@ -32,6 +33,7 @@ class UserRepositoryImpl(
     }
 
     override fun getUserById(id: String): Result<User> {
+        val user = getCollection().findOne(User::id eq id)
         return getCollection().findOne(User::id eq id).toResult()
     }
 
@@ -56,7 +58,8 @@ class UserRepositoryImpl(
                         lastName = user.lastName,
                         phoneNumber = user.phoneNumber,
                         email = user.email,
-                        role = existingUser.role
+                        role = existingUser.role,
+                        location = user.location
                     )
                 )
             } else {
@@ -72,7 +75,8 @@ class UserRepositoryImpl(
                     lastName = user.lastName,
                     phoneNumber = user.phoneNumber,
                     email = user.email,
-                    role = existingUser?.role ?: 1
+                    role = existingUser?.role ?: 1,
+                    location = user.location
                 )
             )
         }
@@ -80,5 +84,16 @@ class UserRepositoryImpl(
 
     private fun doUpdate(user: User): Result<Boolean> {
         return getCollection().updateOne(User::id eq user.id, user).wasAcknowledged().toResult()
+    }
+
+    override fun updateCoordinate(id: String, coordinate: Coordinate): Result<Boolean> {
+        val currentUser = getUserById(id).getOrNull()
+        return if (currentUser != null) {
+            currentUser.location = coordinate
+            println("MY_USER => $currentUser")
+            updateUser(id, currentUser)
+        } else {
+            throw OjekyukException("user not found!")
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.mufid.ojekyukapi.user.controller
 
 import com.mufid.ojekyukapi.BaseResponse
+import com.mufid.ojekyukapi.location.entity.model.Coordinate
 import com.mufid.ojekyukapi.user.entity.response.LoginResponse
 import com.mufid.ojekyukapi.user.entity.User
 import com.mufid.ojekyukapi.user.entity.request.UserLoginRequest
@@ -44,5 +45,13 @@ class DriverController {
     ): BaseResponse<Boolean> {
         val userId = SecurityContextHolder.getContext().authentication.principal as String
         return userService.updateUser(userId, user.mapToDriver()).asResponse()
+    }
+
+    @PutMapping("/coordinate")
+    fun updateDriverCoordinate(
+        @RequestBody coordinate: Coordinate
+    ): BaseResponse<Boolean> {
+        val id = SecurityContextHolder.getContext().authentication.principal as String
+        return userService.updateUserCoordinate(id, coordinate).asResponse()
     }
 }
