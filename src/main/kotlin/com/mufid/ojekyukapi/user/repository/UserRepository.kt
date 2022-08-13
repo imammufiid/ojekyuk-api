@@ -2,6 +2,7 @@ package com.mufid.ojekyukapi.user.repository
 
 import com.mufid.ojekyukapi.location.entity.model.Coordinate
 import com.mufid.ojekyukapi.user.entity.User
+import com.mufid.ojekyukapi.utils.DataQuery
 
 interface UserRepository {
     fun insertUser(user: User): Result<Boolean>
@@ -10,7 +11,7 @@ interface UserRepository {
 
     fun getUserByUsername(username: String): Result<User>
 
-    fun updateUser(id: String, user: User): Result<Boolean>
+    fun <T> update(id: String?, vararg updater: DataQuery<User, T>): Result<Boolean>
 
-    fun updateCoordinate(id: String, coordinate: Coordinate): Result<Boolean>
+    fun findDriversByCoordinate(coordinate: Coordinate): Result<List<User>>
 }

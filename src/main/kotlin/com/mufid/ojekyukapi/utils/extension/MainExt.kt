@@ -3,6 +3,7 @@ package com.mufid.ojekyukapi.utils
 import com.mufid.ojekyukapi.BaseResponse
 import com.mufid.ojekyukapi.location.entity.model.Coordinate
 import com.mufid.ojekyukapi.utils.handler.OjekyukException
+import org.springframework.security.core.context.SecurityContextHolder
 
 inline fun <reified T> T?.orThrow(
     message: String = "${T::class.simpleName} is null"
@@ -34,3 +35,5 @@ fun String.coordinateStringToData(): Coordinate {
     val lon = coordinateStrings[1].toDoubleOrNull() ?: 0.0
     return Coordinate(lat, lon)
 }
+
+fun findUserId(): String? = SecurityContextHolder.getContext().authentication.principal as? String

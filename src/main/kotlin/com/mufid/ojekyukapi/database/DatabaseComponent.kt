@@ -8,5 +8,9 @@ import org.springframework.stereotype.Component
 class DatabaseComponent {
     private val databaseUrl = System.getenv("DATABASE_URL")
 
-    val database: MongoClient = KMongo.createClient(databaseUrl)
+    companion object {
+        const val DATABASE_NAME = "ojekyuk"
+    }
+
+    final val database: MongoClient = KMongo.createClient(databaseUrl)
 }
