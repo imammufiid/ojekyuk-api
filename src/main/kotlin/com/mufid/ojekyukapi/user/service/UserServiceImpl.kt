@@ -48,4 +48,12 @@ class UserServiceImpl(
     override fun updateUserCoordinate(id: String?, coordinate: Coordinate): Result<Boolean> {
         return userRepository.update(id, User::location to coordinate)
     }
+
+    override fun updateFcmToken(id: String, fcmToken: String): Result<User> {
+        return userRepository.updateFcmToken(id, fcmToken)
+            .map {
+                it.password = ""
+                it
+            }
+    }
 }

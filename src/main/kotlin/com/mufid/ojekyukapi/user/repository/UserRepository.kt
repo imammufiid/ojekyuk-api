@@ -14,4 +14,5 @@ interface UserRepository {
     fun <T> update(id: String?, vararg updater: DataQuery<User, T>): Result<Boolean>
 
     fun findDriversByCoordinate(coordinate: Coordinate): Result<List<User>>
+    fun updateFcmToken(id: String, fcmToken: String): Result<User>
 }

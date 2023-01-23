@@ -75,4 +75,11 @@ class UserRepositoryImpl(
             }
             .toResult()
     }
+
+    override fun updateFcmToken(id: String, fcmToken: String): Result<User> {
+        databaseComponent.collection<User>()
+            .updateOne(User::id eq id, User::fcmToken setTo fcmToken)
+            .toResult()
+        return getUserById(id)
+    }
 }

@@ -24,6 +24,8 @@ data class User(
     var password: String = "",
     @JsonProperty("location")
     var location: Coordinate = Coordinate(),
+    @JsonProperty("fcm_token")
+    var fcmToken: String = "",
     @JsonProperty("role")
     var role: RoleEnum = RoleEnum.CUSTOMER,
     @JsonProperty("extras")
