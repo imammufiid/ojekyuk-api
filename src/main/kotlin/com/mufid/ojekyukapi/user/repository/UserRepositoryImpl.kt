@@ -82,4 +82,11 @@ class UserRepositoryImpl(
             .toResult()
         return getUserById(id)
     }
+
+    override fun updateDriverActive(id: String, isDriverActive: Boolean): Result<User> {
+        databaseComponent.collection<User>()
+            .updateOne(User::id eq id, User::extras / DriverExtra::isActive setTo isDriverActive)
+            .toResult()
+        return getUserById(id)
+    }
 }

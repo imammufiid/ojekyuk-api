@@ -4,8 +4,13 @@ import com.mufid.ojekyukapi.authentication.JwtConfig
 import com.mufid.ojekyukapi.location.entity.model.Coordinate
 import com.mufid.ojekyukapi.user.entity.response.LoginResponse
 import com.mufid.ojekyukapi.user.entity.User
+import com.mufid.ojekyukapi.user.entity.UserLocation
+import com.mufid.ojekyukapi.user.entity.extra.DriverExtra
 import com.mufid.ojekyukapi.user.entity.request.UserLoginRequest
+import com.mufid.ojekyukapi.user.repository.UserLocationRepository
 import com.mufid.ojekyukapi.user.repository.UserRepository
+import com.mufid.ojekyukapi.utils.RoleEnum
+import com.mufid.ojekyukapi.utils.extension.safeCastTo
 import com.mufid.ojekyukapi.utils.extension.to
 import com.mufid.ojekyukapi.utils.handler.OjekyukException
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +19,9 @@ import org.springframework.stereotype.Service
 @Service
 class UserServiceImpl(
     @Autowired
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    @Autowired
+    private val userLocationRepository: UserLocationRepository
 ): UserService {
     override fun login(userLoginRequest: UserLoginRequest): Result<LoginResponse> {
         val resultUser = userRepository.getUserByUsername(userLoginRequest.username)
@@ -55,5 +62,29 @@ class UserServiceImpl(
                 it.password = ""
                 it
             }
+    }
+
+    override fun updateDriverActive(id: String, isDriverActive: Boolean): Result<User> {
+        return userRepository.updateDriverActive(id, isDriverActive)
+    }
+
+    override fun updateUserLocation(id: String, coordinate: Coordinate): Result<UserLocation> {
+        return userLocationRepository.updateLocation(id, coordinate)
+    }
+
+    override fun getUserLocation(id: String): Result<UserLocation> {
+        return userLocationRepository.getUserLocation(id)
+    }
+
+    override fun findDriverByCoordinate(coordinate: Coordinate): Result<List<User>> {
+        val userLocationList = userLocationRepository.findDriverByCoordinate(coordinate)
+            .map {
+                it.map {
+                    userRepository.getUserById(it.id).getOrNull()
+                }.filterNotNull()
+                    .filter { it.role == RoleEnum.DRIVER }
+                    .filter { it.extras.safeCastTo(DriverExtra::class.java).isActive }
+            }
+        return userLocationList
     }
 }

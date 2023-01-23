@@ -1,5 +1,7 @@
 package com.mufid.ojekyukapi.location.mapper
 
+import com.mufid.ojekyukapi.booking.entity.Booking
+import com.mufid.ojekyukapi.booking.entity.BookingMinified
 import com.mufid.ojekyukapi.location.entity.model.Coordinate
 import com.mufid.ojekyukapi.location.entity.model.Location
 import com.mufid.ojekyukapi.location.entity.response.LocationHereResult
@@ -22,9 +24,26 @@ object Mapper {
         }.orEmpty()
     }
 
-    fun mapRoutesHereToRoutes(locationRouteHereResult: LocationRouteHereResult): List<Coordinate> {
-        val polylineString = locationRouteHereResult.routes?.firstOrNull()?.sections?.firstOrNull()?.polyline
-        return PolylineEncoderDecoder.decode(polylineString)
+    fun mapRoutesHereToRoutes(locationRouteHereResult: LocationRouteHereResult): Pair<List<Coordinate>, Long> {
+        val section = locationRouteHereResult.routes
+            ?.firstOrNull()
+            ?.sections
+            ?.firstOrNull()
+
+        val polylineString = section?.polyline.orEmpty()
+
+        val coordinates = PolylineEncoderDecoder.decode(polylineString)
             .map { Coordinate(it.lat, it.lng) }
+        val distance = section?.summary?.length ?: 0L
+        return Pair(coordinates, distance)
+    }
+
+    fun mapBookingToMinified(booking: Booking): BookingMinified {
+        return BookingMinified(
+            id = booking.id,
+            price = booking.price,
+            transType = booking.transType,
+            time = booking.time
+        )
     }
 }

@@ -20,7 +20,7 @@ class LocationServiceImpl(
         }
     }
 
-    override fun reverseLocation(coordinate: Coordinate): Result<Location> {
+    override fun reserveLocation(coordinate: Coordinate): Result<Location> {
         return fetcher.reverseLocation(coordinate).map {
             Mapper.mapSearchLocationHereToLocation(it).firstOrNull().orThrow("Location not found")
         }
@@ -28,8 +28,8 @@ class LocationServiceImpl(
 
     override fun getRoutes(origin: Coordinate, destination: Coordinate): Result<Route> {
         return fetcher.getRouteLocation(origin, destination).map {
-            val coordinate = Mapper.mapRoutesHereToRoutes(it)
-            Route(coordinate)
+            val (coordinate, distance) = Mapper.mapRoutesHereToRoutes(it)
+            Route(coordinate, distance)
         }
     }
 }

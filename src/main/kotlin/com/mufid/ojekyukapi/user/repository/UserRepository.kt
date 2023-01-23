@@ -15,4 +15,6 @@ interface UserRepository {
 
     fun findDriversByCoordinate(coordinate: Coordinate): Result<List<User>>
     fun updateFcmToken(id: String, fcmToken: String): Result<User>
+
+    fun updateDriverActive(id: String, isDriverActive: Boolean): Result<User>
 }

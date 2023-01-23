@@ -35,8 +35,8 @@ class LocationController {
     ): BaseResponse<Location> {
         val lat = coordinate.split(",")[0].toDoubleOrNull() ?: 0.0
         val lng = coordinate.split(",")[1].toDoubleOrNull() ?: 0.0
-        println(locationService.reverseLocation(Coordinate(lat, lng)).asResponse())
-        return locationService.reverseLocation(Coordinate(lat, lng)).asResponse()
+        println(locationService.reserveLocation(Coordinate(lat, lng)).asResponse())
+        return locationService.reserveLocation(Coordinate(lat, lng)).asResponse()
     }
 
     @GetMapping("/route")

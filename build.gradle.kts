@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val jjwtVersion: String = "0.11.5"
 val okHttpVersion: String = "4.10.0"
+val coroutineVersion: String = "1.6.4"
 
 plugins {
     id("org.springframework.boot") version "2.7.1"
@@ -38,6 +39,11 @@ dependencies {
 
     // OkHttp
     implementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
+
+    // Coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutineVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutineVersion")
 }
 
 tasks.withType<KotlinCompile> {

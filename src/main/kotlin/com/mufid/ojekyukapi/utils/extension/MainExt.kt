@@ -4,6 +4,8 @@ import com.mufid.ojekyukapi.BaseResponse
 import com.mufid.ojekyukapi.location.entity.model.Coordinate
 import com.mufid.ojekyukapi.utils.handler.OjekyukException
 import org.springframework.security.core.context.SecurityContextHolder
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 inline fun <reified T> T?.orThrow(
     message: String = "${T::class.simpleName} is null"
@@ -38,3 +40,9 @@ fun String.coordinateStringToData(): Coordinate {
 }
 
 fun findUserId(): String? = SecurityContextHolder.getContext().authentication.principal as? String
+
+fun LocalDateTime.parseString(): String {
+    val format = "dd LLLL yyyy, hh:mm a"
+    val formatter = DateTimeFormatter.ofPattern(format)
+    return this.format(formatter)
+}
