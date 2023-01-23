@@ -1,6 +1,6 @@
 package com.mufid.ojekyukapi
 
-open class BaseResponse<T>(
+data class BaseResponse<T>(
     var status: Boolean = true,
     var message: String = "Success",
     var data: T? = null

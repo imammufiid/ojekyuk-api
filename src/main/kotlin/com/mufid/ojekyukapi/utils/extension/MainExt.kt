@@ -25,6 +25,7 @@ fun <T> Result<T>.asResponse(): BaseResponse<T> {
     return if (this.isFailure) {
         throw OjekyukException(this.exceptionOrNull()?.message ?: "Failure")
     } else {
+        println("-----> ${this.getOrNull()}")
         BaseResponse.success(this.getOrNull())
     }
 }

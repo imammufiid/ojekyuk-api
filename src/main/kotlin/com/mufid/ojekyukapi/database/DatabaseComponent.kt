@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class DatabaseComponent {
-    private val databaseUrl = System.getenv("DATABASE_URL")
+    // DATABASE_URL=mongodb+srv://imam:12345@cluster0.na9rg.mongodb.net/?retryWrites=true&w=majority
+    private val databaseUrl = "mongodb+srv://imam:12345@cluster0.na9rg.mongodb.net/?retryWrites=true&w=majority"
 
     companion object {
         const val DATABASE_NAME = "ojekyuk"
