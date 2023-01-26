@@ -12,12 +12,8 @@ import com.mufid.ojekyukapi.user.service.UserService
 import com.mufid.ojekyukapi.utils.asResponse
 import com.mufid.ojekyukapi.utils.findUserId
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/user")
@@ -65,5 +61,12 @@ class UserController {
         @RequestBody updateFcmToken: UpdateFcmToken
     ): BaseResponse<User> {
         return userService.updateFcmToken(findUserId().orEmpty(), updateFcmToken.fcm).asResponse()
+    }
+
+    @PostMapping("/driver/active")
+    fun postDriverActive(
+        @RequestParam(value = "is_active", required = true) isActive: Boolean
+    ): BaseResponse<User> {
+        return userService.updateDriverActive(findUserId().orEmpty(), isActive).asResponse()
     }
 }
